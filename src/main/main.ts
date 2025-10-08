@@ -85,7 +85,7 @@ class CursorX {
       { type: 'separator' },
       {
         label: 'About',
-        click: () => shell.openExternal('https://github.com/luckrnx09/CursorX'),
+        click: () => shell.openExternal('https://github.com/luckrnx09/CursorX.git'),
       },
       {
         label: 'Quit',
