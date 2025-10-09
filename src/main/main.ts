@@ -50,7 +50,7 @@ class CursorX {
   }
 
   private createTray() {
-    const iconPath = join(__dirname, '../../assets/tray/DisabledIconTemplate.png');
+    const iconPath = join(__dirname, './assets/tray/DisabledIconTemplate.png');
     this.tray = new Tray(iconPath);
     
     this.updateTrayMenu();
@@ -98,9 +98,9 @@ class CursorX {
     this.tray.setContextMenu(contextMenu);
     
     if (settings.enabled) {
-      this.tray.setImage(join(__dirname, '../../assets/tray/EnabledIconTemplate.png'));
+      this.tray.setImage(join(__dirname, './assets/tray/EnabledIconTemplate.png'));
     } else {
-      this.tray.setImage(join(__dirname, '../../assets/tray/DisabledIconTemplate.png'));
+      this.tray.setImage(join(__dirname, './assets/tray/DisabledIconTemplate.png'));
     }
   }
 

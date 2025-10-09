@@ -16,5 +16,5 @@
     "emitDecoratorMetadata": true
   },
   "include": ["src/main/**/*", "src/shared/**/*"],
-  "exclude": ["node_modules", "dist", "src/renderer/**/*", "src/test/**/*"]
+  "exclude": ["node_modules", "dist", "src/renderer/**/*"],
 }

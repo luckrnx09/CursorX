@@ -77,21 +77,20 @@
       "output": "release"
     },
     "files": [
-      "dist/**/*",
-      "assets/**/*"
+      "dist/**/*"
     ],
     "mac": {
       "category": "public.app-category.utilities",
       "target": "dmg",
-      "icon": "assets/icons/mac/icon.icns"
+      "icon": "src/main/assets/icons/mac/icon.icns"
     },
     "win": {
       "target": "nsis",
-      "icon": "assets/icons/win/icon.ico"
+      "icon": "src/main/assets/icons/win/icon.ico"
     },
     "linux": {
       "target": "AppImage",
-      "icon": "assets/icons/png"
+      "icon": "src/main/assets/icons/png"
     }
   }
 }
