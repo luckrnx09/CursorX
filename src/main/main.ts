@@ -1,6 +1,5 @@
-import { app, BrowserWindow, Tray, Menu, ipcMain, screen, globalShortcut, shell } from 'electron';
+import { app, BrowserWindow, Tray, Menu, ipcMain, globalShortcut, shell } from 'electron';
 import { join } from 'path';
-import { existsSync } from 'fs';
 import { SettingsManager } from './core/SettingsManager';
 import { CursorTracker } from './core/CursorTracker';
 import { OverlayManager } from './core/OverlayManager';

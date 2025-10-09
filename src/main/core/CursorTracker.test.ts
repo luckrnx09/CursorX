@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { initializeContainer } from "../container/initializeContainer";
 import { CursorTracker } from "./CursorTracker";
 import { getCursorScreenPoint } from "../utils/getCursorScreenPoint";

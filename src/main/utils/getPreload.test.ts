@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
+import { describe, expect, it, vi, afterEach } from "vitest";
 import { getPreload } from "./getPreload";
 import { existsSync } from "fs";
 import { join } from "path";

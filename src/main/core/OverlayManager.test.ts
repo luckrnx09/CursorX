@@ -237,7 +237,7 @@ describe("OverlayManager", () => {
       const browserWindowInstances = vi.mocked(BrowserWindow).mock.results;
       
       const cursorPositionCalls = browserWindowInstances[0].value.webContents.send.mock.calls
-        .filter((call: any[]) => call[0] === "cursor:position");
+        .filter((call: unknown[]) => call[0] === "cursor:position");
       
       expect(cursorPositionCalls).toHaveLength(0);
     });
