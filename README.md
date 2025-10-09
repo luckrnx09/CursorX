@@ -1,7 +1,5 @@
 <div align="center">
-  <img src="screenshots/CursorX.png" alt="CursorX Screenshot" width="800">
-  
-  # CursorX
+  <img src="screenshots/CursorX.png" alt="CursorX Screenshot" width="400">
   
   **A modern cross-platform desktop app for cursor highlighting and click visualization**
   
@@ -34,9 +32,9 @@ Download the installer for your operating system:
 
 | Platform | Download | Size |
 |----------|----------|------|
-| 🍎 **macOS** (Apple Silicon) | [CursorX-1.0.0-arm64.dmg](https://github.com/luckrnx09/CursorX/releases/latest/download/CursorX-1.0.0-arm64.dmg) | ~150 MB |
+| 🍎 **macOS** (Apple Silicon) | [CursorX-{version}-arm64.dmg](https://github.com/luckrnx09/CursorX/releases/latest/download/CursorX-{version}-arm64.dmg) | ~150 MB |
 | 🪟 **Windows** | [CursorX Setup 1.0.0.exe](https://github.com/luckrnx09/CursorX/releases/latest/download/CursorX.Setup.1.0.0.exe) | ~130 MB |
-| 🐧 **Linux** (ARM64) | [CursorX-1.0.0-arm64.AppImage](https://github.com/luckrnx09/CursorX/releases/latest/download/CursorX-1.0.0-arm64.AppImage) | ~140 MB |
+| 🐧 **Linux** (ARM64) | [CursorX-{version}-arm64.AppImage](https://github.com/luckrnx09/CursorX/releases/latest/download/CursorX-{version}-arm64.AppImage) | ~140 MB |
 
 ### Installation Instructions
 
@@ -55,8 +53,8 @@ Download the installer for your operating system:
 
 #### Linux
 1. Download the `.AppImage` file
-2. Make it executable: `chmod +x CursorX-1.0.0-arm64.AppImage`
-3. Run the application: `./CursorX-1.0.0-arm64.AppImage`
+2. Make it executable: `chmod +x CursorX-{version}-arm64.AppImage`
+3. Run the application: `./CursorX-{version}-arm64.AppImage`
 
 ---
 
@@ -67,17 +65,6 @@ Download the installer for your operating system:
 - **Custom Colors** - Pick any color for the cursor highlight background and outline
 - **Opacity Control** - Fine-tune transparency levels for subtle or bold effects
 - **Outline Customization** - Adjust outline width, offset, and appearance
-
-### 🖱️ Click Visualization
-- Real-time visual feedback when you click
-- Smooth animations that don't distract from your content
-- Works across all applications and windows
-
-### ⚙️ Easy Configuration
-- **System Tray Integration** - Quick access from your menu bar/system tray
-- **Instant Toggle** - Enable/disable CursorX with a single click
-- **Settings Panel** - User-friendly interface for all customization options
-- **Start at Login** - Automatically launch CursorX when your system starts
 
 ### 🌍 Cross-Platform Support
 - Built with Electron for consistent experience across platforms
@@ -360,15 +347,6 @@ SOFTWARE.
 
 ---
 
-## 🙏 Acknowledgments
-
-- Built with [Electron](https://www.electronjs.org/)
-- UI components from [shadcn/ui](https://ui.shadcn.com/)
-- Icons from [Lucide](https://lucide.dev/)
-- Inspired by the need for better screen recording tools
-
----
-
 ## 🌟 Support
 
 If you find CursorX useful, please consider:
@@ -379,20 +357,3 @@ If you find CursorX useful, please consider:
 - 📢 **Spread the word** to others who might find it useful
 
 ---
-
-## 📧 Contact
-
-- **GitHub**: [@luckrnx09](https://github.com/luckrnx09)
-- **Repository**: [luckrnx09/CursorX](https://github.com/luckrnx09/CursorX)
-- **Issues**: [Report a bug](https://github.com/luckrnx09/CursorX/issues/new)
-
----
-
-<div align="center">
-  <p>Made with ❤️ by the CursorX Team</p>
-  <p>
-    <a href="https://github.com/luckrnx09/CursorX">⭐ Star on GitHub</a> •
-    <a href="https://github.com/luckrnx09/CursorX/issues">🐛 Report Bug</a> •
-    <a href="https://github.com/luckrnx09/CursorX/issues">💡 Request Feature</a>
-  </p>
-</div>
