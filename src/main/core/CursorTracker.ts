@@ -1,6 +1,6 @@
-import { injectable } from "inversify";
-import { MousePosition } from "../../shared/types";
-import { getCursorScreenPoint } from "../utils/getCursorScreenPoint";
+import { injectable } from 'inversify';
+import { MousePosition } from '../../shared/types';
+import { getCursorScreenPoint } from '../utils/getCursorScreenPoint';
 
 type CursorPositionChangeCallback = (position: MousePosition) => void;
 type CursorTrackerOptions = {

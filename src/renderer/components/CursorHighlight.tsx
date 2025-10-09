@@ -14,7 +14,7 @@ export function CursorHighlight({ position, settings }: CursorHighlightProps) {
     if (elementRef.current) {
       const { x, y } = position;
       const { size } = settings;
-      
+
       elementRef.current.style.transform = `translate(${x - size / 2}px, ${y - size / 2}px)`;
     }
   }, [position, settings.size]);
@@ -30,9 +30,12 @@ export function CursorHighlight({ position, settings }: CursorHighlightProps) {
     }
     return `rgba(255, 255, 255, ${alpha})`;
   };
-  
+
   // Convert both background and outline colors to rgba with their respective opacities
-  const backgroundColorWithOpacity = hexToRgba(settings.background.color, settings.background.opacity);
+  const backgroundColorWithOpacity = hexToRgba(
+    settings.background.color,
+    settings.background.opacity
+  );
   const outlineColorWithOpacity = hexToRgba(settings.outline.color, settings.outline.opacity);
 
   return (

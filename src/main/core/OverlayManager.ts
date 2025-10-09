@@ -1,8 +1,8 @@
-import { BrowserWindow, screen } from "electron";
-import { join } from "path";
-import { Settings, MousePosition } from "../../shared/types";
-import { injectable } from "inversify";
-import { getPreload } from "../utils/getPreload";
+import { BrowserWindow, screen } from 'electron';
+import { join } from 'path';
+import { Settings, MousePosition } from '../../shared/types';
+import { injectable } from 'inversify';
+import { getPreload } from '../utils/getPreload';
 
 @injectable()
 export class OverlayManager {
@@ -41,7 +41,7 @@ export class OverlayManager {
         position.y < bounds.y + bounds.height;
 
       if (isOnDisplay) {
-        window.webContents.send("cursor:position", {
+        window.webContents.send('cursor:position', {
           x: position.x - bounds.x,
           y: position.y - bounds.y,
         });
@@ -84,24 +84,24 @@ export class OverlayManager {
           preload: getPreload('overlay'),
         },
       });
-      overlayWindow.setAlwaysOnTop(true, "screen-saver");
+      overlayWindow.setAlwaysOnTop(true, 'screen-saver');
       overlayWindow.setVisibleOnAllWorkspaces(true, {
         visibleOnFullScreen: true,
       });
       overlayWindow.setIgnoreMouseEvents(true, { forward: true });
 
-      const isDev = process.env.NODE_ENV === "development";
+      const isDev = process.env.NODE_ENV === 'development';
 
       if (isDev) {
-        overlayWindow.loadURL("http://localhost:3000/overlay.html");
+        overlayWindow.loadURL('http://localhost:3000/overlay.html');
       } else {
-        overlayWindow.loadFile(join(__dirname, "../../renderer/overlay.html"));
+        overlayWindow.loadFile(join(__dirname, '../../renderer/overlay.html'));
       }
 
       // Send settings once the overlay is ready
-      overlayWindow.webContents.once("dom-ready", () => {
+      overlayWindow.webContents.once('dom-ready', () => {
         if (this.settings) {
-          overlayWindow.webContents.send("settings:update", this.settings);
+          overlayWindow.webContents.send('settings:update', this.settings);
         }
       });
 
@@ -109,9 +109,9 @@ export class OverlayManager {
     });
 
     // Listen for display changes
-    screen.on("display-added", () => this.recreateOverlayWindows());
-    screen.on("display-removed", () => this.recreateOverlayWindows());
-    screen.on("display-metrics-changed", () => this.recreateOverlayWindows());
+    screen.on('display-added', () => this.recreateOverlayWindows());
+    screen.on('display-removed', () => this.recreateOverlayWindows());
+    screen.on('display-metrics-changed', () => this.recreateOverlayWindows());
   }
 
   private destroyOverlayWindows() {
@@ -134,7 +134,7 @@ export class OverlayManager {
     if (!this.settings) return;
 
     this.overlayWindows.forEach((window) => {
-      window.webContents.send("settings:update", this.settings);
+      window.webContents.send('settings:update', this.settings);
     });
   }
 }

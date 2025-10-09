@@ -7,12 +7,17 @@ interface OutlineEffectProps {
   outlineOffset: number;
 }
 
-export function OutlineEffect({ size, outlineColor, outlineWidth, outlineOffset }: OutlineEffectProps) {
+export function OutlineEffect({
+  size,
+  outlineColor,
+  outlineWidth,
+  outlineOffset,
+}: OutlineEffectProps) {
   // Calculate the scale factor to create the offset gap
   // When offset is 0, scale should be 1 (no gap)
   // When offset increases, scale should increase proportionally
   const scale = 1 + (outlineOffset * 2) / size;
-  
+
   return (
     <div
       className="outline-effect"

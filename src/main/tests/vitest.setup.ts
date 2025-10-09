@@ -3,10 +3,8 @@ import { mockElectronAPIs } from './electron';
 
 beforeAll(() => {
   mockElectronAPIs();
-})
+});
 
 afterEach(() => {
   vi.clearAllMocks();
-})
-
-
+});

@@ -32,13 +32,13 @@ class CursorX {
     }
 
     await app.whenReady();
-    
+
     app.dock?.hide();
-    
+
     this.createTray();
     this.setupIpcHandlers();
     this.initializeCursorTracking();
-    
+
     app.on('window-all-closed', (e: Event) => {
       e.preventDefault();
     });
@@ -51,9 +51,9 @@ class CursorX {
   private createTray() {
     const iconPath = join(__dirname, './assets/tray/DisabledIconTemplate.png');
     this.tray = new Tray(iconPath);
-    
+
     this.updateTrayMenu();
-    
+
     this.tray.setToolTip('CursorX - Cursor Highlighting Tool');
   }
 
@@ -95,7 +95,7 @@ class CursorX {
     ]);
 
     this.tray.setContextMenu(contextMenu);
-    
+
     if (settings.enabled) {
       this.tray.setImage(join(__dirname, './assets/tray/EnabledIconTemplate.png'));
     } else {
@@ -107,25 +107,25 @@ class CursorX {
     const settings = this.settingsManager.getSettings();
     const newSettings = { ...settings, enabled: !settings.enabled };
     this.settingsManager.updateSettings(newSettings);
-    
+
     if (newSettings.enabled) {
       this.startCursorTracking();
     } else {
       this.stopCursorTracking();
     }
-    
+
     this.updateTrayMenu();
   }
 
   private toggleStartAtLogin() {
     const loginItemSettings = app.getLoginItemSettings();
     const shouldOpenAtLogin = !loginItemSettings.openAtLogin;
-    
+
     app.setLoginItemSettings({
       openAtLogin: shouldOpenAtLogin,
       openAsHidden: false,
     });
-    
+
     this.updateTrayMenu();
   }
 
@@ -133,8 +133,8 @@ class CursorX {
     if (this.settingsWindow) {
       this.settingsWindow.focus();
       return;
-    } 
-    
+    }
+
     this.settingsWindow = new BrowserWindow({
       useContentSize: true,
       show: false,
@@ -143,11 +143,11 @@ class CursorX {
         contextIsolation: true,
         preload: getPreload('settings'),
       },
-      title: ''
+      title: '',
     });
 
     const isDev = process.env.NODE_ENV === 'development';
-    
+
     if (isDev) {
       this.settingsWindow.loadURL('http://localhost:3000/settings.html');
     } else {
@@ -175,7 +175,7 @@ class CursorX {
     });
 
     ipcMain.handle('cursor:position:get', () => {
-      return getCursorScreenPoint()
+      return getCursorScreenPoint();
     });
 
     ipcMain.on('cursor:toggle', () => {
@@ -194,7 +194,7 @@ class CursorX {
     this.cursorTracker.start({
       onPositionChange: (position) => {
         this.overlayManager.updateCursorPosition(position);
-      }
+      },
     });
     this.overlayManager.start();
     this.overlayManager.updateSettings(this.settingsManager.getSettings());

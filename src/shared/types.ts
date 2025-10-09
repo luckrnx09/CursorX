@@ -11,17 +11,17 @@ declare global {
 export interface Settings {
   enabled: boolean;
   size: number;
-  
+
   background: {
     color: string;
     opacity: number;
-  },
+  };
   outline: {
     color: string;
     opacity: number;
     offset: number;
     width: number;
-  },
+  };
 }
 
 export interface MousePosition {

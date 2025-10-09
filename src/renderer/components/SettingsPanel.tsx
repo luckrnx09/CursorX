@@ -15,16 +15,14 @@ interface SettingsPanelProps {
 export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps) {
   const [localSettings, setLocalSettings] = useState({ ...settings });
 
-  const updateSetting = <K extends keyof Settings>(
-    key: K,
-    value: Partial<Settings[K]>
-  ) => {
+  const updateSetting = <K extends keyof Settings>(key: K, value: Partial<Settings[K]>) => {
     let finalValue = value;
-    if (typeof value === 'object') { 
-      finalValue = { ...localSettings[key] as object, ...value };
+    if (typeof value === 'object') {
+      finalValue = { ...(localSettings[key] as object), ...value };
     }
     const newSettings = {
-      ...localSettings, [key]: finalValue
+      ...localSettings,
+      [key]: finalValue,
     };
     setLocalSettings(newSettings);
     onSettingsChange(newSettings);
@@ -47,14 +45,18 @@ export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps
             </div>
             <div>
               <CardTitle className="text-xl">General Settings</CardTitle>
-              <CardDescription className="text-sm">Configure the main CursorX functionality</CardDescription>
+              <CardDescription className="text-sm">
+                Configure the main CursorX functionality
+              </CardDescription>
             </div>
           </div>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800/50 dark:to-slate-900/50 border border-slate-200/50 dark:border-slate-700/50">
             <div className="space-y-1">
-              <Label htmlFor="enable-cursorx" className="text-base font-semibold">Enable CursorX</Label>
+              <Label htmlFor="enable-cursorx" className="text-base font-semibold">
+                Enable CursorX
+              </Label>
               <p className="text-xs text-muted-foreground">Turn cursor enhancement on or off</p>
             </div>
             <Switch
@@ -77,7 +79,9 @@ export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps
             </div>
             <div>
               <CardTitle className="text-xl">Background Styles</CardTitle>
-              <CardDescription className="text-sm">Customize the appearance of your cursor background</CardDescription>
+              <CardDescription className="text-sm">
+                Customize the appearance of your cursor background
+              </CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -115,8 +119,10 @@ export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps
                   onChange={(e) => updateSetting('background', { color: e.target.value })}
                   className="w-20 h-12 cursor-pointer rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors"
                 />
-                <div className="absolute inset-0 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-                  style={{ boxShadow: `0 0 20px ${localSettings.background.color}` }} />
+                <div
+                  className="absolute inset-0 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                  style={{ boxShadow: `0 0 20px ${localSettings.background.color}` }}
+                />
               </div>
               <Input
                 type="text"
@@ -161,7 +167,9 @@ export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps
             </div>
             <div>
               <CardTitle className="text-xl">Outline Styles</CardTitle>
-              <CardDescription className="text-sm">Customize the appearance of your cursor outline</CardDescription>
+              <CardDescription className="text-sm">
+                Customize the appearance of your cursor outline
+              </CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -178,8 +186,10 @@ export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps
                   onChange={(e) => updateSetting('outline', { color: e.target.value })}
                   className="w-20 h-12 cursor-pointer rounded-xl border-2 border-slate-200 dark:border-slate-700 hover:border-primary transition-colors"
                 />
-                <div className="absolute inset-0 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
-                  style={{ boxShadow: `0 0 20px ${localSettings.outline.color}` }} />
+                <div
+                  className="absolute inset-0 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
+                  style={{ boxShadow: `0 0 20px ${localSettings.outline.color}` }}
+                />
               </div>
               <Input
                 type="text"

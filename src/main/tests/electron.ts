@@ -1,8 +1,8 @@
-import { vi } from "vitest";
-import { APP_PATH } from "./constants";
+import { vi } from 'vitest';
+import { APP_PATH } from './constants';
 
 export const mockElectronAPIs = () => {
-  vi.mock(import("electron"), async (importOriginal) => {
+  vi.mock(import('electron'), async (importOriginal) => {
     const actual = await importOriginal();
     return {
       ...actual,

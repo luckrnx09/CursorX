@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { Settings, MousePosition,  } from '../../shared/types';
+import { Settings, MousePosition } from '../../shared/types';
 
 const overlayAPI = {
   getSettings: () => ipcRenderer.invoke('settings:get'),

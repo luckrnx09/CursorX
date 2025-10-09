@@ -1,7 +1,7 @@
-import { Container } from "inversify";
-import { OverlayManager } from "../core/OverlayManager";
-import { CursorTracker } from "../core/CursorTracker";
-import { SettingsManager } from "../core/SettingsManager";
+import { Container } from 'inversify';
+import { OverlayManager } from '../core/OverlayManager';
+import { CursorTracker } from '../core/CursorTracker';
+import { SettingsManager } from '../core/SettingsManager';
 
 export const initializeContainer = () => {
   const container = new Container();

@@ -1,0 +1,21 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+release
+
+# Temp files
+tmp
+*.log
+
+# IDE
+.vscode
+.idea
+
+# OS
+.DS_Store
+
+# Generated files
+coverage
+*.tsbuildinfo

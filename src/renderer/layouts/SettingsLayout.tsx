@@ -7,13 +7,13 @@ export const DEFAULT_SETTINGS: Settings = {
   enabled: true,
   size: 80,
   background: {
-    color: "#13bef6",
+    color: '#13bef6',
     opacity: 0.5,
   },
   outline: {
     offset: 2,
     width: 5,
-    color: "#00FF00",
+    color: '#00FF00',
     opacity: 0.5,
   },
 };
@@ -29,12 +29,12 @@ export function SettingsLayout() {
         if (window.settingsAPI) {
           const currentSettings = await window.settingsAPI.settings.get();
           setSettings(currentSettings);
-          
+
           // Setup listener for settings updates
           window.settingsAPI.settings.onUpdated((updatedSettings) => {
             setSettings(updatedSettings);
           });
-        } else { 
+        } else {
           setSettings(DEFAULT_SETTINGS);
         }
       } catch (err) {
@@ -65,7 +65,9 @@ export function SettingsLayout() {
           <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
           <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-primary/40 rounded-full animate-spin [animation-duration:1.5s]" />
         </div>
-        <p className="mt-6 text-foreground/80 text-lg font-medium animate-pulse">Loading settings...</p>
+        <p className="mt-6 text-foreground/80 text-lg font-medium animate-pulse">
+          Loading settings...
+        </p>
       </div>
     );
   }
@@ -79,7 +81,9 @@ export function SettingsLayout() {
           </div>
           <div className="space-y-2">
             <h2 className="text-2xl font-bold text-foreground">Something went wrong</h2>
-            <p className="text-base text-muted-foreground">Failed to load settings. Please restart the application.</p>
+            <p className="text-base text-muted-foreground">
+              Failed to load settings. Please restart the application.
+            </p>
           </div>
           <div className="p-4 bg-destructive/5 rounded-lg border border-destructive/20">
             <p className="text-sm text-destructive font-mono">{error}</p>
@@ -114,7 +118,7 @@ export function SettingsLayout() {
           </div>
         </div>
       </header>
-      
+
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center space-y-4 mb-4">
@@ -122,26 +126,25 @@ export function SettingsLayout() {
             Customize Your Experience
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Fine-tune your cursor highlighting and click visualization effects for optimal visibility and style
+            Fine-tune your cursor highlighting and click visualization effects for optimal
+            visibility and style
           </p>
         </div>
       </div>
-      
+
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
-          {/* Settings Panel */}
-           <SettingsPanel
-              settings={settings}
-              onSettingsChange={handleSettingsChange}
-            />
+        {/* Settings Panel */}
+        <SettingsPanel settings={settings} onSettingsChange={handleSettingsChange} />
       </main>
-      
+
       {/* Footer */}
       <footer className="border-t border-slate-200/50 dark:border-slate-800/50 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
           <div className="text-center space-y-2">
             <p className="text-sm text-muted-foreground">
-              Made with <span className="text-red-500 animate-pulse">❤️</span> for better cursor visibility
+              Made with <span className="text-red-500 animate-pulse">❤️</span> for better cursor
+              visibility
             </p>
             <p className="text-xs text-muted-foreground/60">
               © 2025 CursorX. All rights reserved.
