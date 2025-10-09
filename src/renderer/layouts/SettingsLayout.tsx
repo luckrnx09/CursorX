@@ -22,24 +22,6 @@ export function SettingsLayout() {
   const [settings, setSettings] = useState<Settings | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isDarkMode, setIsDarkMode] = useState(true); // Default to dark mode
-
-  // Apply dark mode on mount and when it changes
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
-
-  // Load dark mode preference from localStorage
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('cursorx-theme');
-    if (savedTheme === 'light') {
-      setIsDarkMode(false);
-    }
-  }, []);
 
   useEffect(() => {
     const loadSettings = async () => {
