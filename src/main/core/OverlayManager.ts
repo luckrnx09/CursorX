@@ -20,6 +20,12 @@ export class OverlayManager {
     this.destroyOverlayWindows();
   }
 
+  restart() {
+    // Force restart to ensure clean state after system wake up
+    this.stop();
+    this.start();
+  }
+
   updateSettings(settings: Settings) {
     this.settings = settings;
     this.updateOverlayStyles();
@@ -115,9 +121,18 @@ export class OverlayManager {
   }
 
   private destroyOverlayWindows() {
+    // Remove all display event listeners before destroying windows
+    screen.removeAllListeners('display-added');
+    screen.removeAllListeners('display-removed');
+    screen.removeAllListeners('display-metrics-changed');
+
     this.overlayWindows.forEach((window) => {
       if (!window.isDestroyed()) {
-        window.destroy();
+        try {
+          window.destroy();
+        } catch (error) {
+          console.error('Error destroying overlay window:', error);
+        }
       }
     });
     this.overlayWindows.clear();

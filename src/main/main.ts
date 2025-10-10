@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Tray, Menu, ipcMain, globalShortcut, shell } from 'electron';
+import { app, BrowserWindow, Tray, Menu, ipcMain, globalShortcut, shell, powerMonitor } from 'electron';
 import { join } from 'path';
 import { SettingsManager } from './core/SettingsManager';
 import { CursorTracker } from './core/CursorTracker';
@@ -38,6 +38,7 @@ class CursorX {
     this.createTray();
     this.setupIpcHandlers();
     this.initializeCursorTracking();
+    this.setupPowerMonitor();
 
     app.on('window-all-closed', (e: Event) => {
       e.preventDefault();
@@ -163,6 +164,50 @@ class CursorX {
     });
   }
 
+  private setupPowerMonitor() {
+    // Handle system suspend (sleep)
+    powerMonitor.on('suspend', () => {
+      this.stopCursorTracking();
+    });
+
+    // Handle system resume (wake up)
+    powerMonitor.on('resume', () => {
+      // Add a small delay to ensure system resources are ready
+      setTimeout(() => {
+        this.handleSystemResume();
+      }, 1000);
+    });
+
+    // Handle screen lock
+    powerMonitor.on('lock-screen', () => {
+      this.stopCursorTracking();
+    });
+
+    // Handle screen unlock
+    powerMonitor.on('unlock-screen', () => {
+      setTimeout(() => {
+        this.handleSystemResume();
+      }, 500);
+    });
+  }
+
+  private handleSystemResume() {
+    // Recreate tray if it was destroyed
+    if (!this.tray || this.tray.isDestroyed()) {
+      this.createTray();
+    }
+
+    // Restart cursor tracking if it was enabled
+    const settings = this.settingsManager.getSettings();
+    if (settings.enabled) {
+      // Force restart to ensure clean state
+      this.stopCursorTracking();
+      setTimeout(() => {
+        this.startCursorTracking();
+      }, 100);
+    }
+  }
+
   private setupIpcHandlers() {
     ipcMain.handle('settings:get', () => {
       return this.settingsManager.getSettings();
@@ -196,7 +241,13 @@ class CursorX {
         this.overlayManager.updateCursorPosition(position);
       },
     });
-    this.overlayManager.start();
+    // Check if overlay manager is already active, if so, restart it
+    // This ensures clean state after system resume
+    if (this.overlayManager['isActive']) {
+      this.overlayManager.restart();
+    } else {
+      this.overlayManager.start();
+    }
     this.overlayManager.updateSettings(this.settingsManager.getSettings());
   }
 
