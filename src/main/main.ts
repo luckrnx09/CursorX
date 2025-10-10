@@ -34,7 +34,8 @@ class CursorX {
     await app.whenReady();
 
     app.dock?.hide();
-
+    Menu.setApplicationMenu(null);
+    
     this.createTray();
     this.setupIpcHandlers();
     this.initializeCursorTracking();
@@ -139,6 +140,7 @@ class CursorX {
     this.settingsWindow = new BrowserWindow({
       useContentSize: true,
       show: false,
+      autoHideMenuBar: true,
       webPreferences: {
         nodeIntegration: false,
         contextIsolation: true,

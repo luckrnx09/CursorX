@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SettingsPanel } from '../components/SettingsPanel';
 
 import { Settings } from '../../shared/types';
+import logoSrc from '../assets/icon.svg';
 
 export const DEFAULT_SETTINGS: Settings = {
   enabled: true,
@@ -103,7 +104,7 @@ export function SettingsLayout() {
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-2xl blur-xl opacity-20"></div>
                 <div className="relative w-24 h-24  flex items-center justify-center">
-                  <img src="../../assets/icon.svg" alt="CursorX Logo" />
+                  <img src={logoSrc} alt="CursorX Logo" />
                 </div>
               </div>
               <div>
