@@ -33,52 +33,17 @@ jobs:
       - name: Build application
         run: npm run build
       
-      - name: Package Electron app (macOS)
-        if: matrix.os == 'macos-latest'
-        run: npm run package:mac
+      - name: Package Electron app
+        run: npm run package:all
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Package Electron app (Windows)
-        if: matrix.os == 'windows-latest'
-        run: npm run package:win
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Package Electron app (Linux)
-        if: matrix.os == 'ubuntu-latest'
-        run: npm run package:linux
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Upload release artifacts (macOS)
-        if: matrix.os == 'macos-latest'
+      - name: Upload release artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: macos-release
+          name: release
           path: |
-            release/*.dmg
-            release/*.dmg.blockmap
-            release/latest-mac.yml
-      
-      - name: Upload release artifacts (Windows)
-        if: matrix.os == 'windows-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows-release
-          path: |
-            release/*.exe
-            release/*.exe.blockmap
-            release/latest.yml
-      
-      - name: Upload release artifacts (Linux)
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux-release
-          path: |
-            release/*.AppImage
-            release/latest-linux.yml
+            release/*.*
   
   publish:
     name: Publish Release
@@ -111,8 +76,6 @@ jobs:
           prerelease: false
           generate_release_notes: true
           files: |
-            artifacts/macos-release/*
-            artifacts/windows-release/*
-            artifacts/linux-release/*
+            artifacts/release/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
