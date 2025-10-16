@@ -39,11 +39,3 @@ jobs:
         run: npm run package:all
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        if: matrix.os == 'ubuntu-latest'
-        with:
-          name: electron-builds
-          path: release/
-          retention-days: 7
