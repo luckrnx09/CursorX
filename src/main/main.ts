@@ -1,4 +1,13 @@
-import { app, BrowserWindow, Tray, Menu, ipcMain, globalShortcut, shell, powerMonitor } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  Tray,
+  Menu,
+  ipcMain,
+  globalShortcut,
+  shell,
+  powerMonitor,
+} from 'electron';
 import { join } from 'path';
 import { SettingsManager } from './core/SettingsManager';
 import { CursorTracker } from './core/CursorTracker';
@@ -35,7 +44,7 @@ class CursorX {
 
     app.dock?.hide();
     Menu.setApplicationMenu(null);
-    
+
     this.createTray();
     this.setupIpcHandlers();
     this.initializeCursorTracking();
