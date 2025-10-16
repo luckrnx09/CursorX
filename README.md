@@ -1,7 +1,7 @@
 <div align="center">
   <img src="screenshots/CursorX.png" alt="CursorX Screenshot" width="400">
   
-  **A modern cross-platform desktop app for cursor highlighting and click visualization**
+  **A modern cross-platform desktop app for cursor highlighting**
   
   [![CI](https://github.com/luckrnx09/CursorX/workflows/CI/badge.svg)](https://github.com/luckrnx09/CursorX/actions/workflows/ci.yml)
   [![Release](https://github.com/luckrnx09/CursorX/actions/workflows/release.yml/badge.svg)](https://github.com/luckrnx09/CursorX/actions/workflows/release.yml)
@@ -14,7 +14,7 @@
 
 ## 🎯 About
 
-CursorX is a powerful yet lightweight desktop application that enhances your screen recordings, presentations, and tutorials by providing real-time cursor highlighting and click visualization. Built with modern technologies, it runs seamlessly on macOS, Windows, and Linux.
+CursorX is a powerful yet lightweight desktop application that enhances your screen recordings, presentations, and tutorials by providing real-time cursor highlighting. Built with modern technologies, it runs seamlessly on macOS, Windows, and Linux.
 
 Perfect for:
 - 📹 **Content Creators** - Make your tutorials more engaging
@@ -295,13 +295,6 @@ We welcome contributions from the community! Here's how you can help:
 ---
 
 ## 📚 Documentation
-
-### Additional Resources
-
-- [Workflows Overview](WORKFLOWS_OVERVIEW.md) - CI/CD pipeline documentation
-- [Release Guide](scripts/release.sh) - How to create releases
-- [GitHub Actions](.github/workflows/) - Automated workflows
-
 ### API Documentation
 
 For developers integrating with CursorX or extending its functionality, refer to the TypeScript definitions in [`src/shared/types.ts`](src/shared/types.ts).

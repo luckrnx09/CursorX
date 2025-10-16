@@ -127,7 +127,7 @@ export function SettingsLayout() {
             Customize Your Experience
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Fine-tune your cursor highlighting and click visualization effects for optimal
+            Fine-tune your cursor highlighting  for optimal
             visibility and style
           </p>
         </div>
