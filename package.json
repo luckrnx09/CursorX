@@ -1,6 +1,6 @@
 {
   "name": "cursorx",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A modern cross-platform desktop app for cursor highlighting",
   "main": "dist/main/main.js",
   "scripts": {
