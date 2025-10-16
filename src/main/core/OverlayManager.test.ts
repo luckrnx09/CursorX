@@ -42,6 +42,7 @@ vi.mock('electron', async () => {
         bounds: { x: 1920, y: 0, width: 1920, height: 1080 },
       },
     ]),
+    removeAllListeners: vi.fn(),
     on: vi.fn(),
   };
 
