@@ -108,7 +108,7 @@ jobs:
   
   publish:
     name: Publish Release
-    needs: release
+    needs: [create-tag, release]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -116,6 +116,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
       - name: Download all artifacts
         uses: actions/download-artifact@v4
@@ -125,13 +127,21 @@ jobs:
       - name: Display structure
         run: ls -R artifacts
       
-      - name: Extract version from tag
+      - name: Get version
         id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        run: |
+          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            VERSION="${GITHUB_REF#refs/tags/}"
+          else
+            VERSION="v${{ needs.create-tag.outputs.version }}"
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
       
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
           name: Release ${{ steps.version.outputs.VERSION }}
           draft: false
           prerelease: false
