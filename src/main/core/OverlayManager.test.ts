@@ -65,6 +65,7 @@ describe('OverlayManager', () => {
     mockSettings = {
       enabled: true,
       size: 30,
+      hiddenAfterMs: 5,
       background: {
         color: '#000000',
         opacity: 0.5,

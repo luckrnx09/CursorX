@@ -25,28 +25,34 @@ describe('SettingsManager', () => {
   });
 
   describe('hiddenAfterMs', () => {
-    it('defaults to 5 seconds', () => {
-      const settingsManager = container.get(SettingsManager);
-      settingsManager.reset();
-      expect(settingsManager.getSettings().hiddenAfterMs).toBe(5);
-    });
+    const nestedContainer = initializeContainer();
 
     it('DEFAULT_SETTINGS includes hiddenAfterMs', () => {
       expect(DEFAULT_SETTINGS.hiddenAfterMs).toBe(5);
     });
 
+    it('defaults to 5 seconds', () => {
+      const settingsManager = nestedContainer.get(SettingsManager);
+      settingsManager.reset();
+      expect(settingsManager.getSettings().hiddenAfterMs).toBe(5);
+    });
+
     it('can be set to 0 (always show)', () => {
-      const settingsManager = container.get(SettingsManager);
+      const settingsManager = nestedContainer.get(SettingsManager);
       const settings = settingsManager.getSettings();
       settingsManager.updateSettings({ ...settings, hiddenAfterMs: 0 });
       expect(settingsManager.getSettings().hiddenAfterMs).toBe(0);
+      // Clean up to avoid contaminating other tests
+      settingsManager.reset();
     });
 
     it('can be set to 10 (max delay)', () => {
-      const settingsManager = container.get(SettingsManager);
+      const settingsManager = nestedContainer.get(SettingsManager);
       const settings = settingsManager.getSettings();
       settingsManager.updateSettings({ ...settings, hiddenAfterMs: 10 });
       expect(settingsManager.getSettings().hiddenAfterMs).toBe(10);
+      // Clean up to avoid contaminating other tests
+      settingsManager.reset();
     });
   });
 });
