@@ -23,4 +23,30 @@ describe('SettingsManager', () => {
     settingsManager.reset();
     expect(settingsManager.getSettings()).toEqual(DEFAULT_SETTINGS);
   });
+
+  describe('hiddenAfterMs', () => {
+    it('defaults to 5 seconds', () => {
+      const settingsManager = container.get(SettingsManager);
+      settingsManager.reset();
+      expect(settingsManager.getSettings().hiddenAfterMs).toBe(5);
+    });
+
+    it('DEFAULT_SETTINGS includes hiddenAfterMs', () => {
+      expect(DEFAULT_SETTINGS.hiddenAfterMs).toBe(5);
+    });
+
+    it('can be set to 0 (always show)', () => {
+      const settingsManager = container.get(SettingsManager);
+      const settings = settingsManager.getSettings();
+      settingsManager.updateSettings({ ...settings, hiddenAfterMs: 0 });
+      expect(settingsManager.getSettings().hiddenAfterMs).toBe(0);
+    });
+
+    it('can be set to 10 (max delay)', () => {
+      const settingsManager = container.get(SettingsManager);
+      const settings = settingsManager.getSettings();
+      settingsManager.updateSettings({ ...settings, hiddenAfterMs: 10 });
+      expect(settingsManager.getSettings().hiddenAfterMs).toBe(10);
+    });
+  });
 });

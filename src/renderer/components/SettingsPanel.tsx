@@ -106,8 +106,8 @@ export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps
               className="w-full"
             />
             <p className="text-xs text-muted-foreground">
-              Set to 0 to always show the highlight. When set to 1-10s, the highlight
-              will fade after your cursor stays still for that duration.
+              Set to 0 to always show the highlight. When set to 1-10s, the highlight will fade
+              after your cursor stays still for that duration.
             </p>
           </div>
         </CardContent>
