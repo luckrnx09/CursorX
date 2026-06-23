@@ -5,9 +5,10 @@ import { OutlineEffect } from './OutlineEffect';
 interface CursorHighlightProps {
   position: MousePosition;
   settings: Settings;
+  visible?: boolean;
 }
 
-export function CursorHighlight({ position, settings }: CursorHighlightProps) {
+export function CursorHighlight({ position, settings, visible = true }: CursorHighlightProps) {
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,6 +49,8 @@ export function CursorHighlight({ position, settings }: CursorHighlightProps) {
         backgroundColor: backgroundColorWithOpacity,
         animationDuration: `.3s`,
         position: 'relative',
+        opacity: visible ? 1 : 0,
+        transition: 'opacity 300ms ease-in-out',
       }}
     >
       <OutlineEffect
