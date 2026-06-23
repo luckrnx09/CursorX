@@ -69,7 +69,51 @@ export function SettingsPanel({ settings, onSettingsChange }: SettingsPanelProps
         </CardContent>
       </Card>
 
-      {/* Cursor Highlight Card */}
+      {/* Auto-hide Card */}
+      <Card className="shadow-lg border-slate-200/50 dark:border-slate-800/50 overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500"></div>
+        <CardHeader className="pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center shadow-lg">
+              <span className="text-white text-lg">⏱️</span>
+            </div>
+            <div>
+              <CardTitle className="text-xl">Auto-hide</CardTitle>
+              <CardDescription className="text-sm">
+                Automatically hide the highlight when cursor is idle
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/50 dark:border-slate-800/50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Label className="text-sm font-semibold">Delay</Label>
+              </div>
+              <span className="text-sm font-mono px-3 py-1 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                {localSettings.hiddenAfterMs === 0
+                  ? 'Always show'
+                  : `${localSettings.hiddenAfterMs}s`}
+              </span>
+            </div>
+            <Slider
+              value={[localSettings.hiddenAfterMs]}
+              onValueChange={([hiddenAfterMs]) => updateSetting('hiddenAfterMs', hiddenAfterMs)}
+              min={0}
+              max={10}
+              step={1}
+              className="w-full"
+            />
+            <p className="text-xs text-muted-foreground">
+              Set to 0 to always show the highlight. When set to 1-10s, the highlight will fade
+              after your cursor stays still for that duration.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Background Styles Card */}
       <Card className="shadow-lg border-slate-200/50 dark:border-slate-800/50 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-teal-500"></div>
         <CardHeader className="pb-4">

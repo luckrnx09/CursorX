@@ -42,6 +42,7 @@ export function SettingsApp() {
           const fallbackSettings: Settings = {
             enabled: true,
             size: 40,
+            hiddenAfterMs: 5,
             background: {
               color: '#1e1e1e',
               opacity: 0.5,

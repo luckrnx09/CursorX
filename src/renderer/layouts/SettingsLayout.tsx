@@ -7,6 +7,7 @@ import logoSrc from '../assets/icon.svg';
 export const DEFAULT_SETTINGS: Settings = {
   enabled: true,
   size: 80,
+  hiddenAfterMs: 5,
   background: {
     color: '#13bef6',
     opacity: 0.5,

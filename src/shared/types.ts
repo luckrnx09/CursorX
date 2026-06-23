@@ -11,6 +11,7 @@ declare global {
 export interface Settings {
   enabled: boolean;
   size: number;
+  hiddenAfterMs: number;
 
   background: {
     color: string;
