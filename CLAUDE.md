@@ -51,7 +51,7 @@ CursorX (main/main.ts)        ← app lifecycle, tray, IPC
 | `src/main/core/CursorTracker.ts` | 60fps cursor position polling loop |
 | `src/main/core/OverlayManager.ts` | Create/destroy transparent fullscreen overlay windows per display |
 | `src/shared/types.ts` | `Settings` and `MousePosition` interfaces shared between main+renderer |
-| `src/renderer/views/SettingsApp.tsx` | Settings page top-level layout |
+| `src/renderer/layouts/SettingsLayout.tsx` | Settings page top-level layout |
 | `src/renderer/components/SettingsPanel.tsx` | Settings form: sliders, switches, color pickers |
 | `src/renderer/layouts/OverlayLayout.tsx` | Overlay root: listens to IPC, renders `CursorHighlight` |
 | `src/renderer/components/CursorHighlight.tsx` | The highlight circle + `OutlineEffect` |
