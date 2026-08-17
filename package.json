@@ -115,8 +115,7 @@
     "publish": {
       "provider": "github",
       "owner": "luckrnx09",
-      "repo": "CursorX",
-      "releaseType": "release"
+      "repo": "CursorX"
     }
   }
 }
