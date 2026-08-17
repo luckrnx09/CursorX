@@ -160,21 +160,6 @@ export function SettingsApp() {
           <UpdateSection />
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-200/50 dark:border-slate-800/50 bg-white/50 dark:bg-slate-950/50 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-          <div className="text-center space-y-2">
-            <p className="text-sm text-muted-foreground">
-              Made with <span className="text-red-500 animate-pulse">❤️</span> for better cursor
-              visibility
-            </p>
-            <p className="text-xs text-muted-foreground/60">
-              © 2025 CursorX. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
