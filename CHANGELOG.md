@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.8] - 2026-08-17
+
+### Fixed
+
+- fix: render Updates card in the real settings view
+- fix: publish GitHub releases as non-draft by default
+
+### Changed
+
+- Merge pull request #5 from luckrnx09/fix/settings-updates-card
+- Merge pull request #4 from luckrnx09/chore/remove-settings-footer
+- chore: remove settings page footer
+- Merge pull request #3 from luckrnx09/fix/release-type
+
 ## [0.0.7] - 2026-08-17
 
 ### Added
