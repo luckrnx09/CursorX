@@ -36,6 +36,4 @@ jobs:
         run: npm run test
       
       - name: Build Electron app
-        run: npm run package:all
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run package:all -- --publish never
