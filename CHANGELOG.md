@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.0] - 2026-08-17
+
+### Added
+
+- feat: simplify Updates card, center content
+
+### Changed
+
+- Merge pull request #7 from luckrnx09/feat/update-card-ui
+
 ## [0.0.9] - 2026-08-17
 
 ### Fixed
