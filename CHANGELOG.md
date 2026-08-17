@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.0.7] - 2026-08-17
+
+### Added
+
+- feat: port tyvox release flow and CI signing
+- feat: add one-line install scripts and auto-update
+- feat: add auto-hide setting with idle timeout slider
+
+### Fixed
+
+- fix: add hiddenAfterMs to test mock and cleanup test state
+- fix: prettier format and add hiddenAfterMs unit tests
+
+### Changed
+
+- Merge pull request #2 from luckrnx09/feat/auto-update
+- Merge pull request #1 from luckrnx09/hidden-after-ms
+- docs: add CLAUDE.md project context
+
 ## [0.0.6] - 2025-10-16
 
 ### Changed
