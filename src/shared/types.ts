@@ -30,6 +30,14 @@ export interface MousePosition {
   y: number;
 }
 
+export type UpdateStatus =
+  | { state: 'checking' }
+  | { state: 'available'; version: string }
+  | { state: 'downloading'; percent: number }
+  | { state: 'downloaded'; version: string }
+  | { state: 'not-available' }
+  | { state: 'error'; message: string };
+
 export interface IpcChannels {
   SETTINGS_GET: 'settings:get';
   SETTINGS_SET: 'settings:set';

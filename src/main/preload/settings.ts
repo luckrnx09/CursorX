@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { Settings } from '../../shared/types';
+import { Settings, UpdateStatus } from '../../shared/types';
 
 const api = {
   settings: {
@@ -12,8 +12,18 @@ const api = {
   cursor: {
     toggle: () => ipcRenderer.send('cursor:toggle'),
   },
+  updater: {
+    check: (): Promise<void> => ipcRenderer.invoke('update:check'),
+    install: () => ipcRenderer.send('update:install'),
+    quitAndInstall: () => ipcRenderer.send('update:quit-install'),
+    onStatus: (callback: (status: UpdateStatus) => void) => {
+      ipcRenderer.on('update:status', (_, status) => callback(status));
+    },
+  },
   app: {
     quit: () => ipcRenderer.send('app:quit'),
+    getVersion: (): Promise<string> => ipcRenderer.invoke('app:version'),
+    platform: process.platform,
   },
 };
 

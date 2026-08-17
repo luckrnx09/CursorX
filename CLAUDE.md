@@ -55,6 +55,9 @@ CursorX (main/main.ts)        ← app lifecycle, tray, IPC
 | `src/renderer/components/SettingsPanel.tsx` | Settings form: sliders, switches, color pickers |
 | `src/renderer/layouts/OverlayLayout.tsx` | Overlay root: listens to IPC, renders `CursorHighlight` |
 | `src/renderer/components/CursorHighlight.tsx` | The highlight circle + `OutlineEffect` |
+| `src/main/core/UpdaterService.ts` | Auto-update: electron-updater on Win/Linux, manual dmg swap on macOS |
+| `resources/scripts/update-mac.sh` | Detached script that swaps the .app bundle and relaunches on macOS |
+| `src/renderer/components/UpdateSection.tsx` | Settings page update card: version, status, install actions |
 | `src/renderer/components/OutlineEffect.tsx` | CSS-animated pulsing outline ring |
 | `src/renderer/components/ui/slider.tsx` | shadcn slider (already available) |
 | `src/renderer/components/ui/switch.tsx` | shadcn switch |
