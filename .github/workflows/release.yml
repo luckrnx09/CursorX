@@ -2,151 +2,94 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'package.json'
     tags:
-      - 'v*.*.*'  # Also support manual tag pushes
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
-  create-tag:
-    name: Create Tag
+  gates:
+    name: Gates (lint, typecheck, unit)
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && !startsWith(github.ref, 'refs/tags/')
-    permissions:
-      contents: write
-    outputs:
-      tag_created: ${{ steps.push_tag.outputs.tag_created }}
-      version: ${{ steps.current_version.outputs.version }}
-    
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      
-      - name: Get current version
-        id: current_version
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "Current version: $VERSION"
-      
-      - name: Check if tag exists
-        id: check_tag
-        run: |
-          TAG="v${{ steps.current_version.outputs.version }}"
-          if git rev-parse "$TAG" >/dev/null 2>&1; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-            echo "Tag $TAG already exists"
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "Tag $TAG does not exist"
-          fi
-      
-      - name: Create and push tag
-        id: push_tag
-        if: steps.check_tag.outputs.exists == 'false'
-        run: |
-          TAG="v${{ steps.current_version.outputs.version }}"
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -a "$TAG" -m "Release version ${{ steps.current_version.outputs.version }}"
-          git push origin "$TAG"
-          echo "tag_created=true" >> $GITHUB_OUTPUT
-          echo "Created and pushed tag: $TAG"
-      
-      - name: Tag already exists
-        if: steps.check_tag.outputs.exists == 'true'
-        run: |
-          echo "Tag v${{ steps.current_version.outputs.version }} already exists. Skipping tag creation."
-          echo "tag_created=false" >> $GITHUB_OUTPUT
+      - uses: actions/checkout@v4
 
-  release:
-    name: Create Release
-    needs: create-tag
-    if: |
-      always() && 
-      (needs.create-tag.outputs.tag_created == 'true' || startsWith(github.ref, 'refs/tags/'))
-    runs-on: ${{ matrix.os }}
-    
-    strategy:
-      matrix:
-        os: [macos-latest]
-    
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.12.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint:check
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm run test
+
+  build:
+    name: Build & Package
+    needs: gates
+    runs-on: macos-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22.12.x'
           cache: 'npm'
-      
+
+      - name: Import signing certificate (macOS)
+        env:
+          MAC_CERT_P12_BASE64: ${{ secrets.MAC_CERT_P12_BASE64 }}
+          MAC_CERT_PASSWORD: ${{ secrets.MAC_CERT_PASSWORD }}
+        run: |
+          echo "$MAC_CERT_P12_BASE64" | base64 --decode > "$RUNNER_TEMP/cursorx.p12"
+          security create-keychain -p ci-build "$RUNNER_TEMP/ci.keychain-db"
+          security default-keychain -s "$RUNNER_TEMP/ci.keychain-db"
+          security unlock-keychain -p ci-build "$RUNNER_TEMP/ci.keychain-db"
+          security list-keychains -d user -s "$RUNNER_TEMP/ci.keychain-db" login.keychain
+          security set-keychain-settings -t 3600 "$RUNNER_TEMP/ci.keychain-db"
+          security import "$RUNNER_TEMP/cursorx.p12" -k "$RUNNER_TEMP/ci.keychain-db" \
+            -P "$MAC_CERT_PASSWORD" -T /usr/bin/codesign
+          openssl pkcs12 -legacy -in "$RUNNER_TEMP/cursorx.p12" -clcerts -nokeys \
+            -passin "pass:$MAC_CERT_PASSWORD" -out "$RUNNER_TEMP/cursorx.crt"
+          sudo security add-trusted-cert -d -r trustRoot -k "$RUNNER_TEMP/ci.keychain-db" "$RUNNER_TEMP/cursorx.crt"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: \
+            -s -k ci-build "$RUNNER_TEMP/ci.keychain-db"
+
       - name: Install dependencies
         run: npm ci
-      
-      - name: Run tests
-        run: npm run test
-      
-      - name: Build application
-        run: npm run build
-      
-      - name: Package Electron app
-        run: npm run package:all
+
+      - name: Verify tag matches package version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG=$(node -p "require('./package.json').version")
+          if [ "$TAG" != "$PKG" ]; then
+            echo "Tag '$TAG' does not match package.json version '$PKG'"
+            exit 1
+          fi
+
+      - name: Build & Package
+        run: npm run package:all -- --publish ${{ startsWith(github.ref, 'refs/tags/v') && 'always' || 'never' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Upload release artifacts
+          CSC_IDENTITY_AUTO_DISCOVERY: 'true'
+
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: release
-          path: |
-            release/*.*
-  
-  publish:
-    name: Publish Release
-    needs: [create-tag, release]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-      
-      - name: Display structure
-        run: ls -R artifacts
-      
-      - name: Get version
-        id: version
-        run: |
-          if [[ "${{ github.ref }}" == refs/tags/* ]]; then
-            VERSION="${GITHUB_REF#refs/tags/}"
-          else
-            VERSION="v${{ needs.create-tag.outputs.version }}"
-          fi
-          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
-          echo "Version: $VERSION"
-      
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ steps.version.outputs.VERSION }}
-          name: Release ${{ steps.version.outputs.VERSION }}
-          draft: false
-          prerelease: false
-          generate_release_notes: true
-          files: |
-            artifacts/release/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: cursorx-macos
+          path: release/*
+          if-no-files-found: ignore
+          retention-days: 7

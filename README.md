@@ -26,6 +26,32 @@ Perfect for:
 
 Download the latest installer for your operating system [here](https://github.com/luckrnx09/CursorX/releases).
 
+### One-line install
+
+**macOS / Linux**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/luckrnx09/CursorX/main/scripts/install.sh | bash
+```
+
+- macOS: downloads the dmg, installs `CursorX.app` to `/Applications` and removes the Gatekeeper quarantine flag.
+- Linux: downloads the AppImage to `~/.local/bin/cursorx` and creates a desktop entry.
+
+**Windows (PowerShell)**
+
+```powershell
+irm https://raw.githubusercontent.com/luckrnx09/CursorX/main/scripts/install.ps1 | iex
+```
+
+Downloads the NSIS installer and runs it silently.
+
+### Auto-update
+
+- **Windows / Linux AppImage** — updates download in the background via GitHub Releases and apply on restart.
+- **macOS** — updates in-app: CursorX downloads the new dmg and swaps the app bundle automatically.
+
+You can also check manually from **Settings → Updates**.
+
 ---
 
 ## ✨ Features

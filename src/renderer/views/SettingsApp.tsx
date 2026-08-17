@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SettingsPanel } from '../components/SettingsPanel';
+import { UpdateSection } from '../components/UpdateSection';
 import logoSrc from '../assets/icon.svg';
 
 import type { Settings } from '../../shared/types';
@@ -155,6 +156,9 @@ export function SettingsApp() {
       <main className="max-w-7xl mx-auto px-6 lg:px-8 pb-16">
         {/* Settings Panel */}
         <SettingsPanel settings={settings} onSettingsChange={handleSettingsChange} />
+        <div className="mt-6">
+          <UpdateSection />
+        </div>
       </main>
 
       {/* Footer */}

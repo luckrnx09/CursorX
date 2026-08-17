@@ -55,6 +55,9 @@ CursorX (main/main.ts)        ← app lifecycle, tray, IPC
 | `src/renderer/components/SettingsPanel.tsx` | Settings form: sliders, switches, color pickers |
 | `src/renderer/layouts/OverlayLayout.tsx` | Overlay root: listens to IPC, renders `CursorHighlight` |
 | `src/renderer/components/CursorHighlight.tsx` | The highlight circle + `OutlineEffect` |
+| `src/main/core/UpdaterService.ts` | Auto-update: electron-updater on Win/Linux, manual dmg swap on macOS |
+| `resources/scripts/update-mac.sh` | Detached script that swaps the .app bundle and relaunches on macOS |
+| `src/renderer/components/UpdateSection.tsx` | Settings page update card: version, status, install actions |
 | `src/renderer/components/OutlineEffect.tsx` | CSS-animated pulsing outline ring |
 | `src/renderer/components/ui/slider.tsx` | shadcn slider (already available) |
 | `src/renderer/components/ui/switch.tsx` | shadcn switch |
@@ -70,4 +73,16 @@ npm run build           # production build
 npm run test            # vitest run
 npm run lint:all        # eslint fix + prettier format
 npm run package         # electron-builder
+npm run typecheck       # tsc --noEmit (renderer + main)
+npm run release -- 0.1.0   # bump version, changelog entry, commit, tag, push
 ```
+
+## Release flow
+
+Run `npm run release -- <version>` to bump `package.json`, generate a
+`CHANGELOG.md` entry from commits since the last tag, commit, tag, and push.
+The tag triggers `release.yml`: gates (lint, typecheck, unit tests), then a
+macOS job imports the self-signed signing certificate from repo secrets
+(`MAC_CERT_P12_BASE64` / `MAC_CERT_PASSWORD`), packages all platforms via
+electron-builder, and publishes a GitHub release with electron-updater
+metadata. The tag must match `package.json` version.

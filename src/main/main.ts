@@ -12,6 +12,7 @@ import { join } from 'path';
 import { SettingsManager } from './core/SettingsManager';
 import { CursorTracker } from './core/CursorTracker';
 import { OverlayManager } from './core/OverlayManager';
+import { UpdaterService } from './core/UpdaterService';
 import { getCursorScreenPoint } from './utils/getCursorScreenPoint';
 import { initializeContainer } from './container/initializeContainer';
 import { getPreload } from './utils/getPreload';
@@ -22,12 +23,14 @@ class CursorX {
   private settingsManager: SettingsManager;
   private cursorTracker: CursorTracker;
   private overlayManager: OverlayManager;
+  private updaterService: UpdaterService;
 
   constructor() {
     const container = initializeContainer();
     this.settingsManager = container.get(SettingsManager);
     this.cursorTracker = container.get(CursorTracker);
     this.overlayManager = container.get(OverlayManager);
+    this.updaterService = container.get(UpdaterService);
   }
 
   async start() {
@@ -47,6 +50,7 @@ class CursorX {
 
     this.createTray();
     this.setupIpcHandlers();
+    this.updaterService.init(() => this.settingsWindow);
     this.initializeCursorTracking();
     this.setupPowerMonitor();
 
@@ -236,6 +240,22 @@ class CursorX {
 
     ipcMain.on('cursor:toggle', () => {
       this.toggleCursorX();
+    });
+
+    ipcMain.handle('app:version', () => {
+      return app.getVersion();
+    });
+
+    ipcMain.handle('update:check', () => {
+      return this.updaterService.check();
+    });
+
+    ipcMain.on('update:install', () => {
+      this.updaterService.installUpdate();
+    });
+
+    ipcMain.on('update:quit-install', () => {
+      this.updaterService.quitAndInstall();
     });
   }
 
