@@ -14,6 +14,8 @@
     "copy:meta": "cp package.json dist/main/package.json",
     "test": "vitest run",
     "test:ui": "vitest --ui",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.main.json",
+    "release": "node scripts/release.mjs",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,html}\"",
